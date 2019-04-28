@@ -1,0 +1,30 @@
+{
+  "name": "hamburgueria-service",
+  "version": "1.0.0",
+  "description": "The nodejs service that will be responsible for the best burger shop in the world",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josenberg/hamburgueria-service.git"
+  },
+  "author": "Philipe Godoy (jpg)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/josenberg/hamburgueria-service/issues"
+  },
+  "homepage": "https://github.com/josenberg/hamburgueria-service#readme",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "express": "^4.16.4"
+  },
+  "dependencies": {
+    "helmet": "^3.16.0",
+    "http-status-codes": "^1.3.2"
+  }
+}
