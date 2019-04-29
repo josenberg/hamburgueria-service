@@ -9,4 +9,8 @@ BurgerRouter.route('/ingredients')
   .get(IngredientsController.list)
   .post(IngredientsController.create);
 
+BurgerRouter.route('/ingredients/:id')
+  .put(IngredientsController.update);
+
+
 module.exports = BurgerRouter;

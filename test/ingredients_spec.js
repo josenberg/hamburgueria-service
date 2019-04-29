@@ -61,6 +61,32 @@ class IngredientsSuite {
           }
         });
       });
+
+      describe(`PUT /ingredients`, () => {
+        it('should change the name and price of a ingredient', async () => {
+          try {
+            const dataToUpdate = {
+              name: 'azeitna',
+              price: 2.9,
+            };
+
+            const response = await request(app)
+              .put('/ingredients/6')
+              .send(dataToUpdate)
+              .set('Content-Type', 'application/json')
+              .type('form')
+              .expect(HttpStatus.OK);
+
+            expect(response.body.id).to.a('number');
+            expect(response.body.name).to.equal('azeitna');
+            expect(response.body.price).to.equal(2.9);
+
+            return response;
+          } catch (error) {
+            throw error;
+          }
+        });
+      });
     });
   }
 }

@@ -1,4 +1,4 @@
-const { max, reduce } = require('ramda');
+const { max, reduce, isNil } = require('ramda');
 
 const ingredients = [{
   id: 1,
@@ -72,6 +72,33 @@ class IngredientsController {
     IngredientsController.ingredients.push(newIngredient);
     return response.json(newIngredient);
   }
+
+  static update(request, response) {
+    const { id } = request.params;
+
+    const ingredient = IngredientsController.ingredients.find(ing => ing.id === Number(id));
+    if (isNil(ingredient)) {
+      throw new Error({ message: 'Ingredient not found' });
+    }
+
+    const { name, displayName, price: requestPrice } = request.body;
+    const price = parseFloat(requestPrice);
+
+    if (!isNil(name)) {
+      ingredient.name = name;
+    }
+
+    if (!isNil(displayName)) {
+      ingredient.displayName = displayName;
+    }
+
+    if (!isNil(price)) {
+      ingredient.price = price;
+    }
+
+    return response.json(ingredient);
+  }
+
 }
 
 module.exports = IngredientsController;
