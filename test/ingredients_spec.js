@@ -30,6 +30,37 @@ class IngredientsSuite {
           }
         });
       });
+
+      describe(`POST /ingredients`, () => {
+        it('should add a new ingredient', async () => {
+          try {
+            const newIngredient = {
+              name: 'azeitona',
+              displayName: 'Azeitona',
+              price: 0.9,
+            };
+
+            const response = await request(app)
+              .post('/ingredients')
+              .send(newIngredient)
+              .set('Content-Type', 'application/json')
+              .type('form')
+              .expect(HttpStatus.OK);
+
+            expect(response.body.id).to.a('number');
+
+            const getResponse = await request(app)
+              .get('/ingredients')
+              .expect(HttpStatus.OK);
+
+            expect(getResponse.body.length).to.equal(6);
+
+            return response;
+          } catch (error) {
+            throw error;
+          }
+        });
+      });
     });
   }
 }

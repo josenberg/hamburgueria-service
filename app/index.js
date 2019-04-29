@@ -3,7 +3,7 @@
  */
 const express = require('express');
 const helmet = require('helmet');
-
+const bodyParser = require('body-parser');
 /**
  * Routes
  */
@@ -22,6 +22,9 @@ class BurgerService {
 
     // Add a little more security with helmet
     this._app.use(helmet());
+    this._app.use(bodyParser.urlencoded({
+      extended: true,
+    }));
 
     // Configure routes
     this._app.use(BurgerRouter);
