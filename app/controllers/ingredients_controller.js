@@ -1,4 +1,5 @@
-const { max, reduce, isNil } = require('ramda');
+const { isNil } = require('ramda');
+const { getNextID } = require('../utilities/common');
 
 const ingredients = [{
   id: 1,
@@ -27,16 +28,7 @@ const ingredients = [{
   price: 1.5,
 }];
 
-/**
- * Return the next id to be used in a insertion
- * @param {*} ingredients 
- */
-const getNextID = (ingredients) => {
-  const listOfIds = ingredients.map(ingredient => ingredient.id);
-  return reduce(max, 0, listOfIds) + 1; 
-};
-
-const validadeIngredient = ({ name, displayName, price}) => (
+const validadeIngredient = ({ name, displayName, price }) => (
   typeof name === 'string'
   && typeof displayName === 'string'
   && typeof price === 'number'
@@ -47,20 +39,23 @@ class IngredientsController {
     return ingredients;
   }
 
+  static findById(id) {
+    return IngredientsController.ingredients.find(ing => ing.id === Number(id));
+  }
+
   static list(request, response) {
     return response.json(IngredientsController.ingredients);
   }
 
   static create(request, response) {
-    let id = getNextID(IngredientsController.ingredients);
+    const id = getNextID(IngredientsController.ingredients);
 
     const { name, displayName, price: requestPrice } = request.body;
     const price = parseFloat(requestPrice);
 
     if (!validadeIngredient({ name, displayName, price })) {
-      throw 'Invalid Ingredient';
+      throw new Error({ message: 'Ingredient not found' });
     }
-
 
     const newIngredient = {
       id,
@@ -76,7 +71,7 @@ class IngredientsController {
   static update(request, response) {
     const { id } = request.params;
 
-    const ingredient = IngredientsController.ingredients.find(ing => ing.id === Number(id));
+    const ingredient = IngredientsController.findById(id);
     if (isNil(ingredient)) {
       throw new Error({ message: 'Ingredient not found' });
     }
@@ -98,7 +93,6 @@ class IngredientsController {
 
     return response.json(ingredient);
   }
-
 }
 
 module.exports = IngredientsController;
