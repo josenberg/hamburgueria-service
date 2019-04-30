@@ -1,4 +1,5 @@
 const { isNil } = require('ramda');
+const { getNextID } = require('../utilities/common');
 
 const IngredientsController = require('./ingredients_controller');
 
@@ -24,13 +25,21 @@ const menu = [{
   ingredients: [2, 3, 4, 5],
 }];
 
-class BurgersController {
+const validateMenuItem = ({ name, displayName, ingredients }) => {
+  if (typeof name !== 'string' || typeof displayName !== 'string') {
+    return false;
+  }
+  return ingredients.length > 0
+    && !ingredients.some(ingredient => isNil(IngredientsController.findById(ingredient)));
+};
+
+class MenuController {
   static get menu() {
     return menu;
   }
 
   static list(request, response) {
-    const completeMenu = BurgersController.menu.map(menuItem => ({
+    const completeMenu = MenuController.menu.map(menuItem => ({
       ...menuItem,
       ingredients: menuItem.ingredients.map(id => IngredientsController.findById(id)),
     }));
@@ -38,13 +47,32 @@ class BurgersController {
   }
 
   static findById(id) {
-    return BurgersController.menu.find(menuItem => menuItem.id === Number(id));
+    return MenuController.menu.find(menuItem => menuItem.id === Number(id));
+  }
+
+  static create(request, response) {
+    const id = getNextID(IngredientsController.ingredients);
+
+    const { name, displayName, ingredients } = request.body;
+    if (!validateMenuItem({ name, displayName, ingredients })) {
+      throw new Error({ message: 'Invalid MenuItem' });
+    }
+
+    const newMenuItem = {
+      id,
+      name,
+      displayName,
+      ingredients,
+    };
+
+    MenuController.menu.push(newMenuItem);
+    return response.json(newMenuItem);
   }
 
   static update(request, response) {
     const { id } = request.params;
 
-    const menuItem = BurgersController.findById(id);
+    const menuItem = MenuController.findById(id);
     if (isNil(menuItem)) {
       throw new Error({ message: 'MenuItem not found' });
     }
@@ -67,4 +95,4 @@ class BurgersController {
   }
 }
 
-module.exports = BurgersController;
+module.exports = MenuController;

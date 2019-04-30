@@ -33,6 +33,37 @@ class IngredientsSuite {
         });
       });
 
+      describe(`POST /menu`, () => {
+        it('should add a new menuItem', async () => {
+          try {
+            const newMenuItem = {
+              name: 'spacialburger',
+              displayName: 'Burger special',
+              ingredients: [1, 2, 3, 4, 5],
+            };
+
+            const response = await request(app)
+              .post('/menu')
+              .send(newMenuItem)
+              .set('Content-Type', 'application/json')
+              .type('form')
+              .expect(HttpStatus.OK);
+
+            expect(response.body.id).to.a('number');
+
+            const getResponse = await request(app)
+              .get('/menu')
+              .expect(HttpStatus.OK);
+
+            expect(getResponse.body.length).to.equal(5);
+
+            return response;
+          } catch (error) {
+            throw error;
+          }
+        });
+      });
+
       describe(`PUT /menu`, () => {
         it('should change the name and price and the ingredients of a menu item', async () => {
           try {

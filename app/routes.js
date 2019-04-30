@@ -14,7 +14,8 @@ BurgerRouter.route('/ingredients/:id')
   .put(IngredientsController.update);
 
 BurgerRouter.route('/menu')
-  .get(MenuController.list);
+  .get(MenuController.list)
+  .post(MenuController.create);
 
 BurgerRouter.route('/menu/:id')
   .put(MenuController.update);

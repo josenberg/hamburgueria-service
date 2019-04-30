@@ -54,7 +54,7 @@ class IngredientsController {
     const price = parseFloat(requestPrice);
 
     if (!validadeIngredient({ name, displayName, price })) {
-      throw new Error({ message: 'Ingredient not found' });
+      throw new Error({ message: 'Invalid Ingredient' });
     }
 
     const newIngredient = {
