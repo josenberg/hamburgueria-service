@@ -4,12 +4,7 @@ const HttpStatus = require('http-status-codes');
 // eslint-disable-next-line no-unused-vars
 const chai = require('chai');
 
-const should = chai.should();
 const { expect } = chai;
-
-const isValidRule = ruleType => (
-  ruleType === 'discount_percentage' || ruleType === 'free_item'
-);
 
 class IngredientsSuite {
   static execute(app) {

@@ -6,6 +6,7 @@ const BurgerRouter = require('express').Router();
 const IngredientsController = require('./controllers/ingredients_controller');
 const MenuController = require('./controllers/menu_controller');
 const RulesController = require('./controllers/rules_controller');
+const CartController = require('./controllers/cart_controller');
 
 BurgerRouter.route('/ingredients')
   .get(IngredientsController.list)
@@ -23,5 +24,8 @@ BurgerRouter.route('/menu/:id')
 
 BurgerRouter.route('/rules')
   .get(RulesController.list);
+
+BurgerRouter.route('/cart')
+  .post(CartController.create);
 
 module.exports = BurgerRouter;

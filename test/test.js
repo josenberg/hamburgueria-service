@@ -3,6 +3,7 @@ const BurgerService = require('../app');
 const IngredientsSpec = require('./ingredients_spec');
 const MenuSpec = require('./menu_spec');
 const RulesSpec = require('./rules_spec');
+const CartSpec = require('./cart_spec');
 
 describe('Burger Service Test Suite', () => {
   let app;
@@ -23,5 +24,6 @@ describe('Burger Service Test Suite', () => {
     IngredientsSpec.execute(app);
     MenuSpec.execute(app);
     RulesSpec.execute(app);
+    CartSpec.execute(app);
   });
 });
