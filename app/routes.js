@@ -16,5 +16,7 @@ BurgerRouter.route('/ingredients/:id')
 BurgerRouter.route('/menu')
   .get(MenuController.list);
 
+BurgerRouter.route('/menu/:id')
+  .put(MenuController.update);
 
 module.exports = BurgerRouter;

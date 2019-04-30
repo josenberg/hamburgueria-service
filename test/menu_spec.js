@@ -32,6 +32,31 @@ class IngredientsSuite {
           }
         });
       });
+
+      describe(`PUT /menu`, () => {
+        it('should change the name and price and the ingredients of a menu item', async () => {
+          try {
+            const dataToUpdate = {
+              displayName: 'X-Princesa',
+              ingredients: [1, 2, 3, 4, 5],
+            };
+
+            const response = await request(app)
+              .put('/menu/1')
+              .send(dataToUpdate)
+              .set('Content-Type', 'application/json')
+              .type('form')
+              .expect(HttpStatus.OK);
+
+            expect(response.body.displayName).to.equal('X-Princesa');
+            expect(response.body.ingredients.length).to.equal(5);
+            return response;
+          } catch (error) {
+            throw error;
+          }
+        });
+      });
+
     });
   }
 }

@@ -1,3 +1,5 @@
+const { isNil } = require('ramda');
+
 const IngredientsController = require('./ingredients_controller');
 
 const menu = [{
@@ -33,6 +35,35 @@ class BurgersController {
       ingredients: menuItem.ingredients.map(id => IngredientsController.findById(id)),
     }));
     return response.json(completeMenu);
+  }
+
+  static findById(id) {
+    return BurgersController.menu.find(menuItem => menuItem.id === Number(id));
+  }
+
+  static update(request, response) {
+    const { id } = request.params;
+
+    const menuItem = BurgersController.findById(id);
+    if (isNil(menuItem)) {
+      throw new Error({ message: 'MenuItem not found' });
+    }
+
+    const { name, displayName, ingredients } = request.body;
+
+    if (!isNil(name)) {
+      menuItem.name = name;
+    }
+
+    if (!isNil(displayName)) {
+      menuItem.displayName = displayName;
+    }
+
+    if (!isNil(ingredients)) {
+      menuItem.ingredients = ingredients;
+    }
+
+    return response.json(menuItem);
   }
 }
 
