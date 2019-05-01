@@ -39,7 +39,22 @@ class IngredientsSuite {
             const newMenuItem = {
               name: 'spacialburger',
               displayName: 'Burger special',
-              ingredients: [1, 2, 3, 4, 5],
+              ingredients: [{
+                id: 1,
+                quantity: 1,
+              }, {
+                id: 2,
+                quantity: 1,
+              }, {
+                id: 3,
+                quantity: 1,
+              }, {
+                id: 4,
+                quantity: 1,
+              }, {
+                id: 5,
+                quantity: 1,
+              }],
             };
 
             const response = await request(app)
@@ -69,7 +84,22 @@ class IngredientsSuite {
           try {
             const dataToUpdate = {
               displayName: 'X-Princesa',
-              ingredients: [1, 2, 3, 4, 5],
+              ingredients: [{
+                id: 1,
+                quantity: 1,
+              }, {
+                id: 2,
+                quantity: 1,
+              }, {
+                id: 3,
+                quantity: 1,
+              }, {
+                id: 4,
+                quantity: 1,
+              }, {
+                id: 5,
+                quantity: 1,
+              }],
             };
 
             const response = await request(app)

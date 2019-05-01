@@ -7,22 +7,58 @@ const menu = [{
   id: 1,
   name: 'xbacon',
   displayName: 'X-Bacon',
-  ingredients: [2, 3, 5],
+  ingredients: [{
+    id: 2,
+    quantity: 1,
+  }, {
+    id: 3,
+    quantity: 1,
+  }, {
+    id: 5,
+    quantity: 1,
+  }],
 }, {
   id: 2,
   name: 'xburger',
   displayName: 'X-Burger',
-  ingredients: [3, 5],
+  ingredients: [{
+    id: 3,
+    quantity: 1,
+  }, {
+    id: 5,
+    quantity: 1,
+  }],
 }, {
   id: 3,
   name: 'xegg',
   displayName: 'X-Egg',
-  ingredients: [3, 4, 5],
+  ingredients: [{
+    id: 3,
+    quantity: 1,
+  }, {
+    id: 4,
+    quantity: 1,
+  }, {
+    id: 5,
+    quantity: 1,
+  }],
 }, {
   id: 4,
   name: 'xeggbacon',
   displayName: 'X-Egg Bacon',
-  ingredients: [2, 3, 4, 5],
+  ingredients: [{
+    id: 2,
+    quantity: 1,
+  }, {
+    id: 3,
+    quantity: 1,
+  }, {
+    id: 4,
+    quantity: 1,
+  }, {
+    id: 5,
+    quantity: 1,
+  }],
 }];
 
 const validateMenuItem = ({ name, displayName, ingredients }) => {
@@ -30,7 +66,7 @@ const validateMenuItem = ({ name, displayName, ingredients }) => {
     return false;
   }
   return ingredients.length > 0
-    && !ingredients.some(ingredient => isNil(IngredientsController.findById(ingredient)));
+    && !ingredients.some(({ id }) => isNil(IngredientsController.findById(id)));
 };
 
 class MenuController {
@@ -41,7 +77,10 @@ class MenuController {
   static list(request, response) {
     const completeMenu = MenuController.menu.map(menuItem => ({
       ...menuItem,
-      ingredients: menuItem.ingredients.map(id => IngredientsController.findById(id)),
+      ingredients: menuItem.ingredients.map(({ id, quantity }) => ({
+        ...IngredientsController.findById(id),
+        quantity,
+      })),
     }));
     return response.json(completeMenu);
   }
