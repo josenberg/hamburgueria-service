@@ -5,7 +5,7 @@ Feito com muito carinho.
 ## Como rodar
 ### Ambiente de Desenvolvimento
 `npm install`  
-`node index`  
+`node index.js`  
 
 ### Docker
 `docker build -t "TAG:VERSION" .`  
